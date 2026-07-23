@@ -9,4 +9,6 @@ RUN npm ci
 COPY src ./src
 COPY test ./test
 
+USER node
+
 CMD ["npm", "test"]
