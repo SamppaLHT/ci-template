@@ -30,3 +30,22 @@ jobs:
 
       - name: Run dependency audit
         run: npm audit --audit-level-high
+
+  sast:
+    name: Semgrep SAST
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Semgrep
+        run: |
+          python3 -m pip install semgrep
+
+      - name: Run Semgrep
+        run: |
+          semgrep scan \
+            --config p/default \
+            --config p/security-audit \
+            --error .
