@@ -88,3 +88,31 @@ jobs:
         run: |
           osv-scanner scan source -r .
 
+  sbom:
+    name: Generate SBOM
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0 
+
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        runs: npm ci
+
+      - name: Generate SBOM
+        run: |
+          mkdir -p artifacts
+          npx cyclonedx-npm --output-file artifacts/sbom.cdx.json
+
+      - name: Upload SBOM
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: sbom
+          path: artifacts/sbom.cdx.json
