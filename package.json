@@ -1,0 +1,21 @@
+{
+  "name": "ci-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test",
+	"audit:dependencies": "npm audit --audit-level=high"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamppaLHT/ci-template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SamppaLHT/ci-template/issues"
+  },
+  "homepage": "https://github.com/SamppaLHT/ci-template#readme"
+}
