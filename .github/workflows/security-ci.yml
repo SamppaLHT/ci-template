@@ -116,3 +116,25 @@ jobs:
         with:
           name: sbom
           path: artifacts/sbom.cdx.json
+
+  container-scan:
+    name: Build and scan container
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Build container image
+        run: docker build --tag ci-template:${{ github.sha }} .
+
+      - name: Scan container image
+        uses: aquasecurityt/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
+        with:
+          image-ref: ci-template:${{ github.sha }}
+          scan-type: image
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+          format: table
+
